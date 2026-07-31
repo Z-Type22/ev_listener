@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS users
+(
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    email TEXT NOT NULL UNIQUE,
+    wallet TEXT NOT NULL,
+    hashed_password BYTEA NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_email ON users (wallet);

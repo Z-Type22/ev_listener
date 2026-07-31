@@ -1,0 +1,310 @@
+basePath: /
+consumes:
+- application/json
+definitions:
+  gettran.Response:
+    properties:
+      status:
+        type: string
+      transaction:
+        $ref: '#/definitions/responses.TransactionResponse'
+    type: object
+  gettrans.Response:
+    properties:
+      status:
+        type: string
+      transactions:
+        items:
+          $ref: '#/definitions/responses.TransactionResponse'
+        type: array
+    type: object
+  login.Request:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  login.Response:
+    properties:
+      access_token:
+        type: string
+      refresh_token:
+        type: string
+      status:
+        type: string
+    type: object
+  logout.Request:
+    properties:
+      refresh_token:
+        type: string
+    type: object
+  logout.Response:
+    properties:
+      status:
+        type: string
+    type: object
+  refresh.Request:
+    properties:
+      refresh_token:
+        type: string
+    type: object
+  refresh.Response:
+    properties:
+      access_token:
+        type: string
+      status:
+        type: string
+    type: object
+  register.Request:
+    properties:
+      email:
+        type: string
+      password1:
+        type: string
+      password2:
+        type: string
+      wallet:
+        type: string
+    type: object
+  register.Response:
+    properties:
+      status:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  responses.TransactionResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      merchant_wallet:
+        type: string
+      payload:
+        additionalProperties: {}
+        type: object
+      price:
+        type: number
+      tx_hash:
+        type: string
+      type:
+        type: string
+      user_wallet:
+        type: string
+    type: object
+  statuses.Response:
+    properties:
+      error:
+        type: string
+      status:
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: REST API for registration, authentication, and transaction retrieval.
+  title: Transactions REST API
+  version: "1.0"
+paths:
+  /v1/transactions/:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gettrans.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/statuses.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/statuses.Response'
+      security:
+      - AccessTokenCookie: []
+      summary: List transactions
+      tags:
+      - transactions
+  /v1/transactions/{id}:
+    get:
+      parameters:
+      - description: Transaction ID
+        in: path
+        minimum: 1
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gettran.Response'
+        "400":
+          description: Invalid transaction ID
+          schema:
+            $ref: '#/definitions/statuses.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/statuses.Response'
+        "404":
+          description: Transaction not found
+          schema:
+            $ref: '#/definitions/statuses.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/statuses.Response'
+      security:
+      - AccessTokenCookie: []
+      summary: Get transaction
+      tags:
+      - transactions
+  /v1/transactions/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticates a user and returns a pair of JWT tokens.
+      parameters:
+      - description: Credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/login.Request'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/login.Response'
+        "400":
+          description: Invalid credentials
+          schema:
+            $ref: '#/definitions/statuses.Response'
+        "422":
+          description: Malformed JSON
+          schema:
+            $ref: '#/definitions/statuses.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/statuses.Response'
+      summary: Log in
+      tags:
+      - auth
+  /v1/transactions/auth/logout:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Refresh token
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/logout.Request'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/logout.Response'
+        "400":
+          description: Invalid refresh token
+          schema:
+            $ref: '#/definitions/statuses.Response'
+        "422":
+          description: Malformed JSON
+          schema:
+            $ref: '#/definitions/statuses.Response'
+      summary: Log out
+      tags:
+      - auth
+  /v1/transactions/auth/refresh:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Refresh token
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/refresh.Request'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/refresh.Response'
+        "400":
+          description: Invalid refresh token
+          schema:
+            $ref: '#/definitions/statuses.Response'
+        "422":
+          description: Malformed JSON
+          schema:
+            $ref: '#/definitions/statuses.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/statuses.Response'
+      summary: Refresh access token
+      tags:
+      - auth
+  /v1/transactions/auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Creates an account and returns its identifier.
+      parameters:
+      - description: Registration data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/register.Request'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/register.Response'
+        "400":
+          description: Invalid data or user already exists
+          schema:
+            $ref: '#/definitions/statuses.Response'
+        "422":
+          description: Malformed JSON
+          schema:
+            $ref: '#/definitions/statuses.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/statuses.Response'
+      summary: Register a user
+      tags:
+      - auth
+produces:
+- application/json
+schemes:
+- http
+securityDefinitions:
+  AccessTokenCookie:
+    description: Set this value to `access_token=<JWT>` for protected endpoints.
+    in: header
+    name: Cookie
+    type: apiKey
+swagger: "2.0"

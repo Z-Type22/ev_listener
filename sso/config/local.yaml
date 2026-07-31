@@ -1,0 +1,11 @@
+env: "local"
+public_key_path: "./tools/certs/jwt_public.pem"
+private_key_path: "./tools/certs/jwt_private.pem"
+access_ttl: 30m
+refresh_ttl: 720h
+migrations_path: "./migrations"
+token_ttl: 30m
+
+grpc:
+  port: 50051
+  timeout: 5s

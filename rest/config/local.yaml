@@ -1,0 +1,21 @@
+env: "local"
+migrations_path: "./migrations"
+public_key_path: "./tools/certs/jwt_public.pem"
+
+http_server:
+  address: "127.0.0.1:8000"
+  timeout: 5s
+  idle_timeout: 60s
+  shutdown_timeout: 10s
+
+clients:
+  sso:
+    address: "127.0.0.1:50051"
+    timeout: 5s
+    retriesCount: 5
+  kafka:
+    address: "localhost:9092"
+    topic: "transactions"
+    group_id: "rest"
+    topic_timeout: 5s
+    num_partitions: 1

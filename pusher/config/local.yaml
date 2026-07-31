@@ -1,0 +1,18 @@
+env: "local"
+rpc_url: "ws://127.0.0.1:8545"
+
+path_contracts:
+  donate_abi_path: "./tools/donate_abi.json"
+  subscription_abi_path: "./tools/subscription_abi.json"
+  marketplace_abi_path: "./tools/marketplace_abi.json"
+  gift_abi_path: "./tools/gift_abi.json"
+  plan_abi_path: "./tools/plan_abi.json"
+
+kafka:
+  address: "localhost:9092"
+  topic: "transactions"
+  write_timeout: 10s
+  topic_timeout: 5s
+  max_attempts: 10
+  batch_size: 100
+  num_partitions: 1

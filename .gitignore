@@ -1,0 +1,49 @@
+# Configuration and certificate files
+*.json
+*.pem
+
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Build directories
+/bin/
+/dist/
+/build/
+/coverage/
+
+# Coverage reports
+coverage.out
+coverage.html
+*.coverprofile
+
+# Go workspace
+go.work.sum
+
+# Vendor (если не коммитите зависимости)
+# /vendor/
+
+# Environment
+.env
+.env.*
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# JetBrains
+*.iml
