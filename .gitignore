@@ -30,7 +30,6 @@ go.work.sum
 
 # Environment
 .env
-.env.*
 
 # Logs
 *.log

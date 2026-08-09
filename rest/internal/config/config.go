@@ -15,6 +15,7 @@ type Config struct {
 	PublicKeyPath  string        `yaml:"public_key_path" env-required:"true"`
 	Clients        ClientsConfig `yaml:"clients"`
 	HTTPServer     `yaml:"http_server"`
+	PprofServer    `yaml:"pprof_server"`
 	Database       `yaml:"database"`
 }
 
@@ -22,7 +23,12 @@ type HTTPServer struct {
 	Address         string        `yaml:"address" env-default:"localhost:8080"`
 	Timeout         time.Duration `yaml:"timeout" env-default:"5s"`
 	IdleTimeout     time.Duration `yaml:"idle_timeout" env-default:"60s"`
-	ShutDownTimeout time.Duration `yaml:"shutdown_timeount" env-default:"10s"`
+	ShutDownTimeout time.Duration `yaml:"shutdown_timeout" env-default:"10s"`
+}
+
+type PprofServer struct {
+	Address         string        `yaml:"address" env-default:"localhost:6060"`
+	ShutDownTimeout time.Duration `yaml:"shutdown_timeout" env-default:"10s"`
 }
 
 type Database struct {

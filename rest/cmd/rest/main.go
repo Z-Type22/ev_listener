@@ -22,6 +22,7 @@ import (
 	"rest/internal/server/handlers/refresh"
 	"rest/internal/server/handlers/register"
 	"rest/internal/storage/postgres"
+	pprofApp "rest/profiling/server"
 	"syscall"
 	"time"
 
@@ -97,8 +98,10 @@ func main() {
 	})
 
 	application := app.New(log, cfg, router)
+	pprofServer := pprofApp.New(log, cfg)
 
 	go application.MustRun()
+	go pprofServer.MustRun()
 	go reader.MustRun()
 
 	quit := make(chan os.Signal, 1)
@@ -112,6 +115,7 @@ func main() {
 	log.Info("closing connection to kafka", slog.Any("signal", sign))
 
 	application.Stop()
+	pprofServer.Stop()
 	clientSSO.Close()
 	storage.Close()
 	reader.Close()

@@ -8,6 +8,10 @@ http_server:
   idle_timeout: 60s
   shutdown_timeout: 10s
 
+pprof_server:
+  addr: "localhost:6060"
+  shutdown_timeout: 5s
+
 clients:
   sso:
     address: "127.0.0.1:50051"
