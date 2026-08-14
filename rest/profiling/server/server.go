@@ -2,8 +2,10 @@ package server
 
 import (
 	"context"
+	"errors"
 	"log/slog"
 	"net/http"
+	_ "net/http/pprof"
 	"rest/internal/config"
 	"time"
 )
@@ -25,7 +27,7 @@ func New(log *slog.Logger, cfg *config.Config) *App {
 func (a *App) MustRun() {
 	a.log.Info("starting pprof server", slog.String("address", a.server.Addr))
 
-	if err := http.ListenAndServe(a.server.Addr, nil); err != nil {
+	if err := a.server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		a.log.Error("pprof server stopped", slog.String("error", err.Error()))
 	}
 }

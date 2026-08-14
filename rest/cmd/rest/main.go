@@ -110,13 +110,17 @@ func main() {
 	sign := <-quit
 
 	log.Info("stopping application", slog.Any("signal", sign))
-	log.Info("closing connection to sso", slog.Any("signal", sign))
-	log.Info("closing connection to database", slog.Any("signal", sign))
-	log.Info("closing connection to kafka", slog.Any("signal", sign))
-
 	application.Stop()
+
+	log.Info("stopping pprof-server", slog.Any("signal", sign))
 	pprofServer.Stop()
+
+	log.Info("closing connection to sso", slog.Any("signal", sign))
 	clientSSO.Close()
+
+	log.Info("closing connection to database", slog.Any("signal", sign))
 	storage.Close()
+
+	log.Info("closing connection to kafka", slog.Any("signal", sign))
 	reader.Close()
 }
