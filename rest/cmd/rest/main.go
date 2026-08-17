@@ -8,7 +8,6 @@ import (
 	_ "rest/docs"
 	"rest/internal/app"
 	"rest/internal/clients/kafka/consumer"
-	"rest/internal/clients/kafka/topic"
 	ssogrpc "rest/internal/clients/sso/grpc"
 	"rest/internal/config"
 	"rest/internal/lib/logger/setup"
@@ -61,9 +60,6 @@ func main() {
 	storage := postgres.New(cfg.Database, log)
 
 	log.Info("starting application", slog.String("env", cfg.Env))
-
-	log.Info("creating topics", slog.String("env", cfg.Env))
-	topic.CreateTopic(cfg.Clients.Kafka.Address, cfg.Clients.Kafka.Topic, cfg.Clients.Kafka.TopicTimeout, cfg.Clients.Kafka.NumPartitions)
 
 	log.Info("connecting to kafka reader", slog.String("env", cfg.Env))
 	reader := consumer.New(cfg.Clients.Kafka.Address, cfg.Clients.Kafka.Topic, cfg.Clients.Kafka.GroupID, storage, log)

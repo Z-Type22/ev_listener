@@ -35,13 +35,11 @@ type PathContracts struct {
 }
 
 type Kafka struct {
-	Address       string        `yaml:"address" env-required:"true"`
-	Topic         string        `yaml:"topic" env-required:"true"`
-	WriteTimeout  time.Duration `yaml:"write_timeout" env-default:"10s"`
-	TopicTimeout  time.Duration `yaml:"topic_timeout" env-default:"5s"`
-	MaxAttempts   int           `yaml:"max_attempts" env-required:"true"`
-	BatchSize     int           `yaml:"batch_size" env-required:"true"`
-	NumPartitions int           `yaml:"num_partitions" env-required:"true"`
+	Address      string        `yaml:"address" env-required:"true"`
+	Topic        string        `yaml:"topic" env-required:"true"`
+	WriteTimeout time.Duration `yaml:"write_timeout" env-default:"10s"`
+	MaxAttempts  int           `yaml:"max_attempts" env-required:"true"`
+	BatchSize    int           `yaml:"batch_size" env-required:"true"`
 }
 
 func MustLoad() *Config {

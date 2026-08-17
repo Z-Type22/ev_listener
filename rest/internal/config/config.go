@@ -47,11 +47,9 @@ type ClientSSO struct {
 }
 
 type ClientKafka struct {
-	Address       string        `yaml:"address" env-required:"true"`
-	Topic         string        `yaml:"topic" env-required:"true"`
-	GroupID       string        `yaml:"group_id" env-default:"rest"`
-	TopicTimeout  time.Duration `yaml:"topic_timeout" env-required:"true"`
-	NumPartitions int           `yaml:"num_partitions" env-required:"true"`
+	Address string `yaml:"address" env-required:"true"`
+	Topic   string `yaml:"topic" env-required:"true"`
+	GroupID string `yaml:"group_id" env-default:"rest"`
 }
 
 type ClientsConfig struct {

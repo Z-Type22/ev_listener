@@ -7,7 +7,6 @@ import (
 	"pusher/internal/app"
 	"pusher/internal/config"
 	"pusher/internal/kafka/producer"
-	"pusher/internal/kafka/topic"
 	"pusher/internal/lib/logger/setup"
 	"syscall"
 )
@@ -16,9 +15,6 @@ func main() {
 	cfg := config.MustLoad()
 
 	log := setup.SetupLogger(cfg.Env)
-
-	log.Info("creating topics", slog.String("env", cfg.Env))
-	topic.CreateTopic(cfg.Kafka.Address, cfg.Kafka.Topic, cfg.Kafka.TopicTimeout, cfg.Kafka.NumPartitions)
 
 	log.Info("connecting to kafka writer", slog.String("env", cfg.Env))
 	writer := producer.New(

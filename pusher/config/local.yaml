@@ -12,7 +12,5 @@ kafka:
   address: "localhost:9092"
   topic: "transactions"
   write_timeout: 10s
-  topic_timeout: 5s
   max_attempts: 10
   batch_size: 100
-  num_partitions: 1

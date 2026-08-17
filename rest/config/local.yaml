@@ -21,5 +21,3 @@ clients:
     address: "localhost:9092"
     topic: "transactions"
     group_id: "rest"
-    topic_timeout: 5s
-    num_partitions: 1
