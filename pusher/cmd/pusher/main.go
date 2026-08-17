@@ -5,8 +5,8 @@ import (
 	"os"
 	"os/signal"
 	"pusher/internal/app"
+	"pusher/internal/clients/kafka/producer"
 	"pusher/internal/config"
-	"pusher/internal/kafka/producer"
 	"pusher/internal/lib/logger/setup"
 	"syscall"
 )

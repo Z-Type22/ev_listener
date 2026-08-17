@@ -4,7 +4,7 @@ import (
 	"context"
 	"log/slog"
 	"math/big"
-	"pusher/internal/kafka/producer"
+	"pusher/internal/clients/kafka/producer"
 	"pusher/internal/lib/contracts"
 	"pusher/internal/listener"
 

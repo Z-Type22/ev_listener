@@ -3,8 +3,8 @@ package app
 import (
 	"context"
 	"log/slog"
+	"pusher/internal/clients/kafka/producer"
 	"pusher/internal/config"
-	"pusher/internal/kafka/producer"
 	"pusher/internal/listener/donate"
 	"pusher/internal/listener/subscription"
 	"time"

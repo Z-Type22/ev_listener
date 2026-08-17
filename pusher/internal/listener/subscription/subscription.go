@@ -6,7 +6,7 @@ import (
 	"math/big"
 	"time"
 
-	"pusher/internal/kafka/producer"
+	"pusher/internal/clients/kafka/producer"
 	"pusher/internal/lib/contracts"
 	"pusher/internal/listener"
 	"pusher/internal/listener/plan"
